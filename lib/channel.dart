@@ -1,3 +1,8 @@
+import 'package:firstapi/controllers/CategoriesController.dart';
+import 'package:firstapi/controllers/CustomersController.dart';
+import 'package:firstapi/controllers/OrderDetailsController.dart';
+import 'package:firstapi/controllers/OrdersController.dart';
+
 import 'controllers/ProductsController.dart';
 import 'firstapi.dart';
 
@@ -21,7 +26,7 @@ class FirstapiChannel extends ApplicationChannel {
 
     final dataModel = ManagedDataModel.fromCurrentMirrorSystem();
     final persistentStore = PostgreSQLPersistentStore(
-        "postgres", "password", "192.168.1.82", 5432, "sales");
+        "helpDeskA", "helpdeska", "192.168.1.82", 5432, "sales");
     context = ManagedContext(dataModel, persistentStore);
   }
 
@@ -44,6 +49,20 @@ class FirstapiChannel extends ApplicationChannel {
     router
         .route("/products[/:idProduct]")
         .link(() => ProductsController(context));
+
+    router
+        .route("/categories[/:idCategory]")
+        .link(() => CategoriesController(context));
+
+    router
+        .route("/customers[/:idCustomer]")
+        .link(() => CustomersController(context));
+
+    router
+        .route("/details[/:idDetail]")
+        .link(() => OrderDetailsController(context));
+
+    router.route("/orders[/:idOrder]").link(() => OrderController(context));
 
     return router;
   }
