@@ -1,4 +1,5 @@
 import 'package:firstapi/firstapi.dart';
+import 'package:firstapi/helpers/Properties.dart';
 import 'package:firstapi/models/Categories.dart';
 
 class CategoriesController extends ResourceController {
@@ -6,7 +7,13 @@ class CategoriesController extends ResourceController {
   final ManagedContext context;
 
   @Operation.get()
-  Future<Response> getAllCategories() async {
+  Future<Response> getAllCategories(
+      @Bind.header("authorization") String authHeader) async {
+    // only allow with correct username and password
+    if (!Properties.isAuthorized(authHeader)) {
+      return Response.forbidden();
+    }
+
     // Consulta al modelo
     final categoriesQuery = Query<Categories>(context);
 

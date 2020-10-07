@@ -1,4 +1,5 @@
 import 'package:firstapi/firstapi.dart';
+import 'package:firstapi/helpers/Properties.dart';
 import 'package:firstapi/models/Products.dart';
 
 class ProductsController extends ResourceController {
@@ -6,7 +7,13 @@ class ProductsController extends ResourceController {
   final ManagedContext context;
 
   @Operation.get()
-  Future<Response> getAllProduct() async {
+  Future<Response> getAllProduct(
+      @Bind.header("authorization") String authHeader) async {
+    // only allow with correct username and password
+    if (!Properties.isAuthorized(authHeader)) {
+      return Response.forbidden();
+    }
+
     // Consulta al modelo
     final productsQuery = Query<Products>(context);
 

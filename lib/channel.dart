@@ -2,6 +2,8 @@ import 'package:firstapi/controllers/CategoriesController.dart';
 import 'package:firstapi/controllers/CustomersController.dart';
 import 'package:firstapi/controllers/OrderDetailsController.dart';
 import 'package:firstapi/controllers/OrdersController.dart';
+import 'package:firstapi/controllers/RestrictedController.dart';
+import 'package:firstapi/controllers/SignupController.dart';
 
 import 'controllers/ProductsController.dart';
 import 'firstapi.dart';
@@ -63,6 +65,8 @@ class FirstapiChannel extends ApplicationChannel {
         .link(() => OrderDetailsController(context));
 
     router.route("/orders[/:idOrder]").link(() => OrderController(context));
+    router.route("/signup").link(() => SignupController());
+    router.route("/restricted").link(() => RestrictedController());
 
     return router;
   }
